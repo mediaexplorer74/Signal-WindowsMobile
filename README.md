@@ -4,6 +4,8 @@ Signal for Windows 10 Mobile
 This solution is little "tuning" of "Signal for Windows 10" () 
 (target: Windows Mobile 10 build 15063)
 
+![Cat Signal application screenshot](screenshot.png "Signal application screenshot")
+
 - 2021 [M][E]
 
 ---- Cloned part ---------
