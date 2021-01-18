@@ -1,0 +1,63 @@
+﻿<Page
+    x:Class="Signal_Windows.Views.RegisterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Signal_Windows.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding RegisterPageInstance, Source={StaticResource Locator}}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <Color x:Key="SystemAltHighColor">#2190EA</Color>
+                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource SystemAltHighColor}" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="SystemAltHighColor">#2190EA</Color>
+                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource SystemAltHighColor}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleTextBlock.FontSize" Value="46"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="TitleTextBlock" Grid.Row="0" Foreground="White" FontSize="34" HorizontalAlignment="Center" Text="Connect with Signal" FontWeight="Light" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1">
+            <StackPanel Width="300">
+                <ComboBox HorizontalAlignment="Stretch" ItemsSource="{x:Bind Vm.CountriesList}" SelectionChanged="ComboBox_SelectionChanged" x:Name="CountriesList" VerticalAlignment="Stretch" d:LayoutOverrides="TopPosition, BottomPosition" PlaceholderText="Select your country"/>
+                <Grid Margin="0,18,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="+" Foreground="White" FontSize="20"/>
+                    <TextBox Grid.Column="1" Text="{x:Bind Vm.PhonePrefix, Mode=TwoWay}" MinWidth="32" InputScope="TelephoneCountryCode"/>
+                    <TextBox Grid.Column="3" Text="{x:Bind Vm.PhoneSuffix, Mode=TwoWay}" PlaceholderText="Phone number" InputScope="TelephoneNumber"/>
+                </Grid>
+            </StackPanel>
+            <TextBlock x:Name="VerifyTextBlock" Text="Verify your phone number to connect with Signal." FontSize="20" Foreground="White" HorizontalAlignment="Center" Margin="0,16,0,0" TextAlignment="Center" TextWrapping="Wrap"/>
+            <Button x:Name="RegisterButton" Background="White" Foreground="#2190EA" HorizontalAlignment="Center" Content="Register" Click="RegisterButton_Click" Margin="0,16,0,0" Width="256"/>
+        </StackPanel>
+    </Grid>
+</Page>

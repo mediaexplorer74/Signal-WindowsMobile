@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="Signal_Windows.Views.RegisterFinalizationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Signal_Windows.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding RegisterFinalizationPageInstance, Source={StaticResource Locator}}">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <Color x:Key="SystemAltHighColor">#2190EA</Color>
+                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource SystemAltHighColor}" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="SystemAltHighColor">#2190EA</Color>
+                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource SystemAltHighColor}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleTextBlock.FontSize" Value="46"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="TitleTextBlock" Grid.Row="0" Foreground="White" FontSize="34" HorizontalAlignment="Center" FontWeight="Light" Text="Connect with Signal" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1">
+            <TextBlock Foreground="White" HorizontalAlignment="Center" Text="Enter your SMS verification code" FontSize="24" FontWeight="SemiLight"/>
+            <TextBox Width="200" Text="{x:Bind Vm.VerificationCode, Mode=TwoWay}" IsEnabled="{x:Bind Vm.UIEnabled, Mode=OneWay}" Margin="0,16,0,0" InputScope="Number"/>
+            <Button Background="White" Foreground="#2190EA" HorizontalAlignment="Center" Width="200" Margin="20 20 20 20" Click="FinishButton_Click" IsEnabled="{x:Bind Vm.UIEnabled, Mode=OneWay}" Content="Finish Registration"/>
+        </StackPanel>
+    </Grid>
+</Page>

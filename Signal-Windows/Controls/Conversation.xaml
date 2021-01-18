@@ -1,0 +1,132 @@
+﻿<UserControl
+    x:Class="Signal_Windows.Controls.Conversation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Signal_Windows.Controls"
+    xmlns:models="using:Signal_Windows.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xaml="using:Windows.UI.Xaml"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Control.Resources>
+        <Style x:Key="ConversationStyle" TargetType="ListView">
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="TabNavigation" Value="Once" />
+            <Setter Property="IsSwipeEnabled" Value="True" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="False" />
+            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled" />
+            <Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="True" />
+            <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+            <Setter Property="ScrollViewer.BringIntoViewOnFocusChange" Value="True" />
+            <Setter Property="ItemContainerTransitions">
+                <Setter.Value>
+                    <TransitionCollection>
+                        <AddDeleteThemeTransition />
+                        <ContentThemeTransition />
+                        <ReorderThemeTransition />
+                        <EntranceThemeTransition IsStaggeringEnabled="False" />
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                Background="{TemplateBinding Background}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="ScrollViewer"
+                                          ViewChanged="ScrollViewer_ViewChanged"
+                                          TabNavigation="{TemplateBinding TabNavigation}"
+                                          HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                          HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                          IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
+                                          VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                          VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                          IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}"
+                                          IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                          IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                          ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
+                                          IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                          BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                          AutomationProperties.AccessibilityView="Raw">
+                                <ItemsPresenter
+                Header="{TemplateBinding Header}"
+                HeaderTemplate="{TemplateBinding HeaderTemplate}"
+                HeaderTransitions="{TemplateBinding HeaderTransitions}"
+                Footer="{TemplateBinding Footer}"
+                FooterTemplate="{TemplateBinding FooterTemplate}"
+                FooterTransitions="{TemplateBinding FooterTransitions}"
+                Padding="{TemplateBinding Padding}"/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Control.Resources>
+    <Grid Background="White" KeyDown="Grid_KeyDown" AllowDrop="True" DragOver="Grid_DragOver" Drop="Grid_Drop">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="{x:Bind HeaderBackground, Mode=OneWay}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE25B;" FontSize="11" Visibility="{x:Bind Blocked, Mode=OneWay}"/>
+                    <TextBlock Name="Displayname" IsTextSelectionEnabled="True" HorizontalAlignment="Center" Text="{x:Bind ThreadDisplayName, Mode=OneWay}" />
+                    <TextBlock Name="Separator" xml:space="preserve" Visibility="{x:Bind SeparatorVisibility, Mode=OneWay}">&#160;&#160;&#x2022;&#160;&#160;</TextBlock>
+                    <TextBlock Name="Username" IsTextSelectionEnabled="True" HorizontalAlignment="Center" Text="{x:Bind ThreadUsername, Mode=OneWay}" Visibility="{x:Bind ThreadUsernameVisibility, Mode=OneWay}" />
+                </StackPanel>
+                <Button Grid.Column="1" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{x:Bind HeaderBackground, Mode=OneWay}">
+                    <SymbolIcon Symbol="More"/>
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Name="ConversationSettingsButton" Text="Conversation settings" Click="ConversationSettingsButton_Click"/>
+                            <MenuFlyoutItem Text="All media" IsEnabled="False"/>
+                            <ToggleMenuFlyoutItem Text="Mute conversation" IsEnabled="False"/>
+                            <MenuFlyoutItem Text="Reset secure session" IsEnabled="False"/>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+        </Border>
+        <ListView Style="{StaticResource ConversationStyle}" Grid.Row="1" x:Name="ConversationItemsControl" VirtualizingStackPanel.VirtualizationMode="Recycling" Background="White" ScrollViewer.VerticalScrollBarVisibility="Visible" Padding="0 0 15 0" SelectionMode="None" SizeChanged="ConversationItemsControl_SizeChanged">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <local:AddedAttachment Grid.Row="0" Grid.ColumnSpan="2" x:Name="AddedAttachmentDisplay" AllowFocusOnInteraction="False" OnCancelAttachmentButtonClicked="AddedAttachmentDisplay_OnCancelAttachmentButtonClicked"/>
+            <local:UserInput Grid.Row="1" x:Name="UserInputBar" SendMessageVisibility="{x:Bind SendMessageVisible, Mode=OneWay}" BlockedVisibility="{x:Bind Blocked, Mode=OneWay}" SendButtonEnabled="{x:Bind SendButtonEnabled, Mode=OneWay}" SpellCheckEnabled="{x:Bind SpellCheckEnabled, Mode=OneWay}" OnSendMessageButtonClicked="UserInputBar_OnSendMessageButtonClicked" OnEnterKeyPressed="UserInputBar_OnEnterKeyPressed" OnUnblockButtonClicked="UserInputBar_OnUnblockButtonClicked" OnInputTextBoxTextChanged="UpdateSendButtonIcon"/>
+        </Grid>
+    </Grid>
+</UserControl>
