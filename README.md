@@ -1,10 +1,10 @@
 # Signal-WindowsMobile
-Signal for Windows 10 Mobile
+Signal for Windows 10 Mobile [ https://github.com/mediaexplorer/Signal-WindowsMobile ] 
 
-This solution is little "tuning" of "Signal for Windows 10" () 
+This solution is little "tuning" of "Signal for Windows 10" [ https://github.com/signal-csharp/Signal-Windows ] 
 (target: Windows Mobile 10 build 15063)
 
-![Cat Signal application screenshot](screenshot.png "Signal application screenshot")
+![Signal application screenshot](screenshot.png "Signal application screenshot")
 
 - 2021 [M][E]
 
@@ -15,7 +15,9 @@ This solution is little "tuning" of "Signal for Windows 10" ()
 
 # Signal-Windows
 
-This is an unofficial Signal client for the Universal Windows Platform. It is (currently) a hobby project in a very early stage of production, so expect bugs and non-backwards compatible changes.
+This is an unofficial Signal client for the Universal Windows Platform. 
+It is (currently) a hobby project in a very early stage of production, 
+so expect bugs and non-backwards compatible changes.
 
 # FAQ
 
