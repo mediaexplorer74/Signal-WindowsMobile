@@ -1,5 +1,5 @@
 # Signal-WindowsMobile
-Signal for Windows 10 Mobile [ https://github.com/mediaexplorer/Signal-WindowsMobile ] 
+Signal for Windows 10 Mobile 
 
 This solution is little "tuning" of "Signal for Windows 10" [ https://github.com/signal-csharp/Signal-Windows ] 
 (target: Windows Mobile 10 build 15063)
