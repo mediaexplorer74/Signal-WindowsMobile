@@ -171,10 +171,36 @@ namespace Signal_Windows.Lib
         public void PurgeAccountData()
         {
             Logger.LogTrace("PurgeAccountData() locking");
-            SemaphoreSlim.Wait(CancelSource.Token);
+            try
+            {
+                SemaphoreSlim.Wait(CancelSource.Token);
+            }
+            catch
+            {
+                Debug.WriteLine("SemaphoreSlim.Wait(CancelSource.Token) Exception");
+            }
+
             Logger.LogTrace("PurgeAccountData() locked");
-            LibsignalDBContext.PurgeAccountData();
-            SemaphoreSlim.Release();
+
+            try
+            {
+                LibsignalDBContext.PurgeAccountData();
+            }
+            catch
+            {
+                Debug.WriteLine("LibsignalDBContext.PurgeAccountData Exception");
+            }
+
+            try
+            {
+                SemaphoreSlim.Release();
+            }
+            catch
+            {
+                Debug.WriteLine("SemaphoreSlim.Release Exception");
+            }
+
+
             Logger.LogTrace("PurgeAccountData() released");
         }
 

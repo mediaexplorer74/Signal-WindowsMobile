@@ -199,8 +199,9 @@ namespace Signal_Windows.Lib
                         Logger.LogTrace($"Sending {sendable.GetType().Name}");
                         await sendable.Send(messageSender, Token);
                     }
-                    catch (OperationCanceledException) { return; }
-                    catch (EncapsulatedExceptions exceptions)
+                    //catch (OperationCanceledException) { return; }
+                    //catch (EncapsulatedExceptions exceptions)
+                    catch (Exception exceptions)
                     {
                         sendable.Status = SignalMessageStatus.Confirmed;
                         Logger.LogError("HandleOutgoingMessages() encountered libsignal exceptions");
@@ -209,10 +210,12 @@ namespace Signal_Windows.Lib
                         {
                             sendable.Status = SignalMessageStatus.Failed_Network;
                         }
+                        
                         if (identityExceptions.Count > 0)
                         {
                             sendable.Status = SignalMessageStatus.Failed_Identity;
                         }
+
                         foreach (UntrustedIdentityException e in identityExceptions)
                         {
                             // TODO: Not sure what to do with this.

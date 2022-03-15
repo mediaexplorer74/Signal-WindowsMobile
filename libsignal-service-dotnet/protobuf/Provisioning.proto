@@ -1,0 +1,24 @@
+syntax = "proto2";
+package textsecure;
+option csharp_namespace = "libsignalservice.push";
+option java_package = "org.whispersystems.textsecure.internal.push";
+option java_outer_classname = "ProvisioningProtos";
+
+message ProvisioningUuid {
+  optional string uuid = 1;
+}
+
+message ProvisionEnvelope {
+  optional bytes publicKey = 1;
+  optional bytes body = 2; // Encrypted ProvisionMessage
+}
+
+message ProvisionMessage {
+  optional bytes identityKeyPublic = 1;
+  optional bytes identityKeyPrivate = 2;
+  optional string number = 3;
+  optional string provisioningCode = 4;
+  optional string userAgent = 5;
+  optional bytes profileKey = 6;
+  optional bool readReceipts = 7;
+}

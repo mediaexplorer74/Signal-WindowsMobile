@@ -3,6 +3,7 @@ using libsignalservice.push.exceptions;
 using libsignalservice.websocket;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -90,13 +91,17 @@ namespace Signal_Windows.Lib
                         SemaphoreSlim.Release();
                         break;
                     }
-                    catch (OperationCanceledException) { }
+                    catch (OperationCanceledException) 
+                    { 
+                    }
                     catch (Exception e)
                     {
                         if (e.Message.Contains("(403)"))
                         {
                             SemaphoreSlim.Release();
-                            throw new AuthorizationFailedException("OWS server rejected authorization.");
+
+                            //throw new AuthorizationFailedException("OWS server rejected authorization.");
+                            Debug.WriteLine("[e] Error 403. OWS server rejected authorization.");
                         }
                         Logger.LogError("ConnectAsync() failed: {0}\n{1}", e.Message, e.StackTrace); //System.Runtime.InteropServices.COMException (0x80072EE7)
                         await Task.Delay(10 * 1000);

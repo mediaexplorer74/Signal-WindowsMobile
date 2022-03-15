@@ -117,7 +117,11 @@ namespace Signal_Windows.ViewModels
             RefreshingContacts = true;
             Contacts.Clear();
             signalContacts.Clear();
-            SignalServiceAccountManager accountManager = new SignalServiceAccountManager(App.ServiceConfiguration, App.Handle.Store.Username, App.Handle.Store.Password, (int)App.Handle.Store.DeviceId, App.USER_AGENT);
+            SignalServiceAccountManager accountManager = 
+                new SignalServiceAccountManager(App.ServiceConfiguration, 
+                App.Handle.Store.Username, App.Handle.Store.Password, 
+                (int)App.Handle.Store.DeviceId, App.USER_AGENT);
+
             ContactStore contactStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadOnly);
             List<PhoneContact> intermediateContacts = new List<PhoneContact>();
             if (contactStore != null)

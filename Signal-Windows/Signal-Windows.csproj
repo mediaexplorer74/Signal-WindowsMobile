@@ -144,8 +144,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="textsecure-servicewhispersystemsorg.crt" />
-    <None Include="Signal-Windows_TemporaryKey.pfx" />
+    <Content Include="textsecure-servicewhispersystemsorg.crt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -384,7 +385,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.2.13</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>3.0.0</Version>
@@ -393,7 +394,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="MvvmLight">
-      <Version>5.4.1</Version>
+      <Version>5.4.1.1</Version>
     </PackageReference>
     <PackageReference Include="QueryString.NET">
       <Version>1.0.0</Version>
@@ -403,6 +404,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\libsignal-service-dotnet\libsignal-service-dotnet.csproj">
+      <Project>{65de53f2-2f38-4b54-8ad4-855bf0b7de08}</Project>
+      <Name>libsignal-service-dotnet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Signal-Windows.Lib\Signal-Windows.Lib.csproj">
       <Project>{1934fd82-a5ea-4b71-b915-a1826593cb6e}</Project>
       <Name>Signal-Windows.Lib</Name>
@@ -413,7 +418,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.17763.0">
+    <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>

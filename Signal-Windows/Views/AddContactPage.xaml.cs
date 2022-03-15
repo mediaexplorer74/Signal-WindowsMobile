@@ -1,4 +1,6 @@
 using Signal_Windows.ViewModels;
+using System;
+using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -29,8 +31,17 @@ namespace Signal_Windows.Views
         protected override async void OnNavigatedTo(NavigationEventArgs ev)
         {
             base.OnNavigatedTo(ev);
+
             Utils.EnableBackButton(Vm.BackButton_Click);
-            await Vm.OnNavigatedTo(); // causes Exception when try Add Contact (maybe *)
+
+            try
+            {
+                await Vm.OnNavigatedTo(); // causes Exception when try Add Contact (maybe *)
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("[ex] AddContact -OnNavigatedTo- Exception: " + ex.Message);
+            }
             /*
              * I don't have the same environment ( i also target mobile and running April update )
 
